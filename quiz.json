@@ -1,0 +1,42 @@
+[
+    {
+        "Question": "Which city is the capital of India ",
+        "Options": [
+            "delhi",
+            "mumbai",
+            "bangalore",
+            "Hyderabad"
+        ],
+        "Answer": "a"
+    },
+    {
+        "Question": "Name the national animal of India",
+        "Options": [
+            "tiger",
+            "dog",
+            "cat",
+            "Bear"
+        ],
+        "Answer": "a"
+    },
+    {
+        "Question": "India have how much states",
+        "Options": [
+            "21",
+            "26",
+            "28",
+            "22"
+        ],
+        "Answer": "c"
+    },
+    {
+        "Question": "How was the quiz app",
+        "Options": [
+            "1/10",
+            "3/10",
+            "5/",
+            "10/10"
+        ],
+        "Answer": "d"
+    }
+]
