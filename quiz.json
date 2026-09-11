@@ -1,42 +1,24 @@
 [
     {
-        "Question": "Which city is the capital of India ",
-        "Options": [
-            "delhi",
-            "mumbai",
-            "bangalore",
-            "Hyderabad"
-        ],
+        "Ques.no": 1,
+        "Question": "Who is prime minister of india",
+        "Options": {
+            "a": "Narendra modi ",
+            "b": "rahul gandhi ",
+            "c": "dharmendra pradhan ",
+            "d": "Ravish kumar"
+        },
         "Answer": "a"
     },
     {
-        "Question": "Name the national animal of India",
-        "Options": [
-            "tiger",
-            "dog",
-            "cat",
-            "Bear"
-        ],
-        "Answer": "a"
-    },
-    {
-        "Question": "India have how much states",
-        "Options": [
-            "21",
-            "26",
-            "28",
-            "22"
-        ],
-        "Answer": "c"
-    },
-    {
-        "Question": "How was the quiz app",
-        "Options": [
-            "1/10",
-            "3/10",
-            "5/",
-            "10/10"
-        ],
-        "Answer": "d"
+        "Ques.no": 2,
+        "Question": "india got indipendence in year ",
+        "Options": {
+            "a": "2026",
+            "b": "1947",
+            "c": "1500",
+            "d": "2001"
+        },
+        "Answer": "b"
     }
 ]
