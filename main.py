@@ -17,6 +17,42 @@ def save_quiz():
     with open("quiz.json", "w")as file:
         json.dump(quiz, file, indent=4)
 
+def validation_of_answer():
+    option_list = ["a", "b", "c", "d"]
+    while True:
+        answer = input("Enter your answer between a - d: ").strip().lower()
+        if answer in option_list:
+            return answer
+        else:
+            print("Enter a valid answer between a - d")
+            
+def Question_show(question):
+    print(question["Question"])
+    for keys, values in question["Options"].items():
+        print(keys, end=") ")
+        print(values)
+        
+def verification_of_answer(answer, question, initial_score):
+    if answer == question["Answer"]:
+        print("Answer is correct")
+        initial_score += 1
+    else:
+        print("Answer is wrong")
+    return initial_score 
+
+def input_question():
+    question = input("Enter your question: ")
+    options = {"a":input("Enter option a: "),
+                "b":input("Enter option b: "),
+                "c":input("Enter option c: "),
+                "d":input("Enter option d: ")} 
+    return question, options 
+
+def marks_card(score, quiz):
+    total_questions = len(quiz)
+    percentage = (score/total_questions)*100
+    print(f"You scored {score}/{total_questions}, percentage achieved {percentage:.0f}%") 
+
 def add_questions():
     while True: 
         try:
@@ -25,24 +61,13 @@ def add_questions():
         except IndexError:
             ques_no = 1
         print("Quesno",ques_no)
-        ques = input("Enter your question: ")
-        opt =  {"a":input("Enter option a: "),
-                "b":input("Enter option b: "),
-                "c":input("Enter option c: "),
-                "d":input("Enter option d: ")}
-        while True:
-            uncheck_ans = input("Enter Your answer between options a - d: ").strip().lower()
-            if uncheck_ans == "a" or uncheck_ans =="b" or uncheck_ans == "c" or uncheck_ans == "d":
-                ans = uncheck_ans
-                break 
-            else:
-                print("Enter answer between a - d")
-                continue 
+        question, option = input_question()
+        answer = validation_of_answer()
         
         add_question = {"Ques.no" : ques_no,
-                        "Question": ques,
-                        "Options": opt,
-                        "Answer": ans}
+                        "Question": question,
+                        "Options": option,
+                        "Answer": answer}
         quiz.append(add_question)
         save_quiz()
         print("Question added successfully")
@@ -63,7 +88,30 @@ def add_questions():
                 print("choose between 1 and 2")
                 continue 
         if add_more == 2:
-            break
+             break 
+         
+def edit_question():
+    while True:
+        try:
+            choice = int(input("Enter Question no which you want to edit: "))
+        except ValueError:
+            print("Enter a valid choice")
+            continue 
+        for question in quiz:
+            if choice == question["Ques.no"]:
+                Question_show(question)
+                print(f'Answer is {question["Answer"]}')
+                print("edit question now....")
+                ques, opt = input_question()
+                question["Question"] = ques 
+                question["Options"] = opt
+                answer = validation_of_answer()
+                question["Answer"] = answer 
+                save_quiz()
+                print("Question edited successfully")
+                return  
+        else:
+            print("Enter a valid Question no") 
                    
 def delete_quiz():
     quiz.clear()
@@ -78,25 +126,11 @@ def run_quiz():
         print("--You are doing Quiz--")
         for question in quiz:
             print(question["Ques.no"] ,end=") ")
-            print(question["Question"])
-            for keys, values in question["Options"].items():
-                print(keys, end=") ")
-                print(values)
-            while True:
-                answer = input("Enter answer between a - d: ").strip().lower()
-                if answer == "a" or answer == "b" or answer == "c" or answer == "d":
-                    break  
-                else:
-                    print("Enter valid answer between a - d")
-                    continue 
-            if answer == question["Answer"]:
-                print("anwer is correct")
-                score += 1 
-            
-            else:
-                print("answer is wrong")
+            Question_show(question)
+            answer = validation_of_answer()
+            score = verification_of_answer(answer, question, score)
         print("Quiz has ended") 
-        print(f"You Scored {score}/{len(quiz)}")   
+        marks_card(score, quiz)   
         
 def random_quiz_run():
     Quesno = 1
@@ -115,58 +149,11 @@ def random_quiz_run():
                 break 
             print(f"Ques.no {Quesno}")
             Quesno += 1 
-            print(random_question["Question"])
-            for keys, values in random_question["Options"].items():
-                print(keys, end=") ")
-                print(values)
+            Question_show(random_question)
             used_questions.append(random_question)
-            while True:
-                answer = input("Enter answer between a - d: ")
-                if answer == "a" or answer == "b" or answer == "c" or answer == "d":
-                    break 
-                else:
-                    print("Enter a valid answer between a - d")
-                    continue 
-            if answer == random_question["Answer"]:
-                print("answer is correct")
-                score += 1
-                continue
-            else:
-                print("answer is wrong")
-                continue 
-        print(f"Your score is {score}/{len(quiz)}")
-        
-def edit_question():
-    while True:
-        try:
-            choice = int(input("Enter Question no which you want to edit: "))
-        except ValueError:
-            print("Enter a valid choice")
-            continue 
-        for question in quiz:
-            if choice == question["Ques.no"]:
-                print(question["Question"])
-                for keys, values in question["Options"].items():
-                    print(keys, end=") ")
-                    print(values)
-                print(f"Answer is {question["Answer"]}")
-                question["Question"] = input("Enter updated Question: ")
-                question["Options"] = {"a":input("Enter option a: "),
-                                       "b":input("Enter option b: "),
-                                       "c":input("Enter option c: "),
-                                       "d":input("Enter option d: ")}
-                while True:
-                    modified_answer = input("Enter Your answer between options a - d: ").strip().lower()
-                    if modified_answer == "a" or modified_answer == "b" or  modified_answer == "c" or modified_answer == "d":
-                        question["Answer"] = modified_answer 
-                        save_quiz()
-                        print("Question edited successfully")
-                        return  
-                    else:
-                        print("Enter a valid answer between a-d")
-                        continue 
-        else:
-            print("Enter a valid Question no") 
+            answer = validation_of_answer()
+            score = verification_of_answer(answer, random_question, score)
+        marks_card(score, quiz)
             
 while True:
     print("Choose Task ?")
